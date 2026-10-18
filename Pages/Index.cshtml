@@ -1,0 +1,233 @@
+﻿
+@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="dashboard">
+    <header class="page-header">
+        <div>
+            <p class="eyebrow">SUPPORT CENTER</p>
+            <h1>ServiceDesk Lite</h1>
+            <p class="subtitle">Manage support requests in one place.</p>
+        </div>
+        <a class="new-ticket" href="/Tickets/Create">
+            + New ticket
+        </a>
+    </header>
+
+    <section class="stats">
+        <article class="stat-card">
+            <span>All tickets</span>
+            <strong>@Model.TotalTickets</strong>
+            <small>Total requests</small>
+        </article>
+        <article class="stat-card">
+            <span>Open</span>
+            <strong>@Model.OpenTickets</strong>
+            <small>Waiting for support</small>
+        </article>
+        <article class="stat-card">
+            <span>In progress</span>
+            <strong>@Model.InProgressTickets</strong>
+            <small>Being handled</small>
+        </article>
+        <article class="stat-card">
+            <span>Resolved</span>
+            <strong>@Model.ResolvedTickets</strong>
+            <small>Successfully completed</small>
+        </article>
+    </section>
+
+    <section class="tickets-panel">
+        <div class="panel-header">
+            <div>
+                <h2>Recent tickets</h2>
+                <p>Overview of the latest support requests</p>
+            </div>
+            <input id="ticketSearch"
+                   type="search"
+                   placeholder="Search tickets..."
+                   aria-label="Search tickets" />
+        </div>
+
+    
+<section class="tickets-panel mt-4">
+    <form method="get">
+        <div class="row g-3 align-items-end">
+            <div class="col-md-6">
+                <label for="searchTerm" class="form-label">
+                    Search tickets
+                </label>
+                <input id="searchTerm"
+                       name="SearchTerm"
+                       value="@Model.SearchTerm"
+                       class="form-control"
+                       placeholder="Search by subject or requester..." />
+            </div>
+
+            <div class="col-md-6">
+                <label for="statusFilter" class="form-label">
+                    Status
+                </label>
+                <select id="statusFilter"
+                        name="StatusFilter"
+                        class="form-select">
+                    <option value="">All statuses</option>
+                    <option value="Open"
+                            selected="@(Model.StatusFilter == "Open")">
+                        Open
+                    </option>
+                    <option value="In Progress"
+                            selected="@(Model.StatusFilter == "In Progress")">
+                        In Progress
+                    </option>
+                    <option value="Resolved"
+                            selected="@(Model.StatusFilter == "Resolved")">
+                        Resolved
+                    </option>
+                </select>
+            </div>
+
+            <div class="col-md-4">
+                <label for="categoryFilter" class="form-label">
+                    Category
+                </label>
+                <select id="categoryFilter"
+                        name="CategoryFilter"
+                        class="form-select">
+                    <option value="">All categories</option>
+                    <option value="Hardware"
+                            selected="@(Model.CategoryFilter == "Hardware")">
+                        Hardware
+                    </option>
+                    <option value="Software"
+                            selected="@(Model.CategoryFilter == "Software")">
+                        Software
+                    </option>
+                    <option value="Network"
+                            selected="@(Model.CategoryFilter == "Network")">
+                        Network
+                    </option>
+                    <option value="Account"
+                            selected="@(Model.CategoryFilter == "Account")">
+                        Account
+                    </option>
+                </select>
+            </div>
+
+            <div class="col-md-4">
+                <label for="priorityFilter" class="form-label">
+                    Priority
+                </label>
+                <select id="priorityFilter"
+                        name="PriorityFilter"
+                        class="form-select">
+                    <option value="">All priorities</option>
+                    <option value="Low"
+                            selected="@(Model.PriorityFilter == "Low")">
+                        Low
+                    </option>
+                    <option value="Medium"
+                            selected="@(Model.PriorityFilter == "Medium")">
+                        Medium
+                    </option>
+                    <option value="High"
+                            selected="@(Model.PriorityFilter == "High")">
+                        High
+                    </option>
+                </select>
+            </div>
+
+            <div class="col-md-4 d-flex gap-2">
+                <button type="submit" class="new-ticket border-0">
+                    Apply filters
+                </button>
+                <a href="/" class="btn btn-outline-secondary">
+                    Reset
+                </a>
+            </div>
+        </div>
+    </form>
+</section>
+
+<p class="text-muted mt-3">
+    Showing @Model.Tickets.Count of @Model.TotalTickets tickets
+</p>
+
+        <div class="table-wrapper">
+            <table id="ticketsTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Subject</th>
+                        <th>Category</th>
+                        <th>Priority</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+    @if (Model.Tickets.Count == 0)
+    {
+        <tr>
+            <td colspan="5" class="text-center py-4">
+                No tickets match your filters.
+            </td>
+        </tr>
+    }
+    else
+    {
+        @foreach (var ticket in Model.Tickets)
+        {
+            <tr>
+                <td>#@ticket.Id</td>
+                <td>
+                    <strong>
+                        <a asp-page="/Tickets/Details"
+                           asp-route-id="@ticket.Id"
+                           class="text-decoration-none">
+                            @ticket.Subject
+                        </a>
+                    </strong>
+                    <div class="text-muted small">
+                        @ticket.RequesterName
+                    </div>
+                </td>
+                <td>@ticket.Category</td>
+                <td>
+                    <span class="badge bg-secondary">
+                        @ticket.Priority
+                    </span>
+                </td>
+                <td>
+                    <span class="badge bg-info text-dark">
+                        @ticket.Status
+                    </span>
+                </td>
+            </tr>
+        }
+    }
+
+                </tbody>
+            </table>
+        </div>
+
+        <p class="demo-note">Sample data for demonstration purposes.</p>
+    </section>
+</div>
+
+@section Scripts {
+    <script>
+        const search = document.getElementById("ticketSearch");
+        const rows = document.querySelectorAll("#ticketsTable tbody tr");
+
+        search.addEventListener("input", () => {
+            const query = search.value.toLowerCase().trim();
+
+            rows.forEach(row => {
+                row.hidden = !row.textContent.toLowerCase().includes(query);
+            });
+        });
+    </script>
+}

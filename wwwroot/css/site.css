@@ -1,0 +1,213 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+.form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
+  color: var(--bs-secondary-color);
+  text-align: end;
+}
+
+.form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
+  text-align: start;
+}
+
+
+/* ServiceDesk Lite dashboard */
+
+.dashboard {
+    max-width: 1200px;
+    margin: 36px auto;
+    padding: 0 20px 40px;
+    color: #172033;
+}
+
+.page-header,
+.panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+.eyebrow {
+    color: #5265d8;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+}
+
+.page-header h1 {
+    font-size: clamp(28px, 4vw, 38px);
+    font-weight: 750;
+    margin: 0;
+}
+
+.subtitle,
+.panel-header p {
+    color: #748096;
+    margin: 8px 0 0;
+}
+
+.new-ticket {
+    background: #5265d8;
+    color: white;
+    padding: 12px 18px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 650;
+    white-space: nowrap;
+}
+
+.new-ticket:hover {
+    background: #3f50bb;
+    color: white;
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+    margin: 32px 0;
+}
+
+.stat-card,
+.tickets-panel {
+    background: white;
+    border: 1px solid #e7eaf1;
+    border-radius: 14px;
+    padding: 22px;
+}
+
+.stat-card span,
+.stat-card small {
+    display: block;
+    color: #748096;
+}
+
+.stat-card strong {
+    display: block;
+    font-size: 32px;
+    margin: 12px 0 6px;
+}
+
+.tickets-panel {
+    padding: 24px;
+}
+
+.panel-header {
+    margin-bottom: 22px;
+}
+
+.panel-header h2 {
+    font-size: 21px;
+    margin: 0;
+}
+
+#ticketSearch {
+    width: min(100%, 260px);
+    padding: 10px 12px;
+    border: 1px solid #dce1eb;
+    border-radius: 9px;
+}
+
+.table-wrapper {
+    overflow-x: auto;
+}
+
+#ticketsTable {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+#ticketsTable th,
+#ticketsTable td {
+    padding: 16px 12px;
+    border-bottom: 1px solid #edf0f5;
+    white-space: nowrap;
+}
+
+#ticketsTable th {
+    color: #748096;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+}
+
+.priority,
+.status {
+    display: inline-block;
+    padding: 5px 9px;
+    border-radius: 7px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.high { background: #fff0ed; color: #c64b36; }
+.medium { background: #fff6df; color: #966b08; }
+.low { background: #eaf7ef; color: #287849; }
+
+.open { background: #edf1ff; color: #4559c5; }
+.progress { background: #fff4df; color: #966b08; }
+.resolved { background: #eaf7ef; color: #287849; }
+
+.demo-note {
+    margin-top: 18px;
+    color: #8992a3;
+    font-size: 12px;
+}
+
+@media (max-width: 800px) {
+    .stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 520px) {
+    .page-header,
+    .panel-header {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .new-ticket {
+        text-align: center;
+    }
+
+    .stats {
+        gap: 10px;
+    }
+
+    .stat-card {
+        padding: 16px;
+    }
+
+    .tickets-panel {
+        padding: 14px;
+    }
+
+    #ticketSearch {
+        width: 100%;
+        box-sizing: border-box;
+    }
+}

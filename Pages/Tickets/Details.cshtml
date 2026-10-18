@@ -1,0 +1,170 @@
+
+@page
+@model ServiceDeskLite.Pages.Tickets.DetailsModel
+@{
+    ViewData["Title"] = "Ticket Details";
+}
+
+<div class="dashboard">
+    
+    @if (TempData["SuccessMessage"] is string successMessage)
+    {
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @successMessage
+        <button type="button" class="btn-close"
+                data-bs-dismiss="alert" aria-label="Закрыть"></button>
+    </div>
+    }
+
+
+
+    @if (Model.Ticket is null)
+    {
+        <h1>Ticket not found</h1>
+        <p>This ticket does not exist or is no longer available.</p>
+        <a href="/" class="new-ticket">Back to dashboard</a>
+    }
+    
+    else
+    {
+        <div class="page-header">
+            <div>
+                <p class="eyebrow">SUPPORT CENTER / TICKET #@Model.Ticket.Id</p>
+                <h1>@Model.Ticket.Subject</h1>
+                
+                <a asp-page="/Tickets/Edit"
+                asp-route-id="@Model.Ticket.Id"
+                class="btn btn-warning mb-3">
+                Редактировать заявку
+                </a>
+
+                <p class="subtitle">
+                    Submitted by @Model.Ticket.RequesterName
+                </p>
+            </div>
+
+            <a href="/" class="new-ticket">Back to dashboard</a>
+        </div>
+
+        <section class="tickets-panel mt-4">
+            <p><strong>Description</strong></p>
+            <p>@Model.Ticket.Description</p>
+
+            <hr />
+
+            <p>
+                <strong>Category:</strong>
+                @Model.Ticket.Category
+            </p>
+
+            <p>
+                <strong>Priority:</strong>
+                @Model.Ticket.Priority
+            </p>
+
+            <p>
+                <strong>Created:</strong>
+                @Model.Ticket.CreatedAt.ToLocalTime().ToString("yyyy-MM-dd HH:mm")
+            </p>
+
+            <p>
+                <strong>Current status:</strong>
+                @Model.Ticket.Status
+            </p>
+
+            <hr />
+
+            <h2 class="h5 mb-3">Update status</h2>
+
+            <form method="post" asp-page-handler="UpdateStatus">
+                <input type="hidden" name="id" value="@Model.Ticket.Id" />
+
+                <div class="mb-3">
+                    <label for="status" class="form-label">
+                        Select new status
+                    </label>
+
+                    <select id="status" name="status" class="form-select">
+                        <option value="Open"
+                                selected="@(Model.Ticket.Status == "Open")">
+                            Open
+                        </option>
+                        <option value="In Progress"
+                                selected="@(Model.Ticket.Status == "In Progress")">
+                            In Progress
+                        </option>
+                        <option value="Resolved"
+                                selected="@(Model.Ticket.Status == "Resolved")">
+                            Resolved
+                        </option>
+                    </select>
+                </div>
+
+
+
+
+
+                <button type="submit" class="new-ticket border-0">
+                    Save status
+                </button>
+            </form>
+        </section>
+
+        <section class="mt-4">
+    <h2>Комментарии</h2>
+
+    @if (Model.Comments.Count == 0)
+    {
+        <p>Пока нет комментариев.</p>
+    }
+    else
+    {
+        @foreach (var comment in Model.Comments)
+        {
+            <div class="card mb-3">
+                <div class="card-body">
+                    <strong>@comment.Author</strong>
+                    <small class="text-muted">
+                        @comment.CreatedAt.ToLocalTime().ToString("dd.MM.yyyy HH:mm")
+                    </small>
+                    <p class="mb-0 mt-2">@comment.Message</p>
+                </div>
+            </div>
+        }
+    }
+
+    <h3 class="mt-4">Добавить комментарий</h3>
+<form method="post"
+      asp-page-handler="AddComment"
+      asp-route-id="@Model.Ticket.Id">
+
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+    <div class="mb-3">
+        <label asp-for="CommentAuthor" class="form-label">
+            Ваше имя
+        </label>
+        <input asp-for="CommentAuthor"
+               class="form-control"
+               maxlength="80"
+               required />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="CommentMessage" class="form-label">
+            Сообщение
+        </label>
+        <textarea asp-for="CommentMessage"
+                  class="form-control"
+                  rows="4"
+                  maxlength="2000"
+                  required></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-primary">
+        Добавить комментарий
+    </button>
+</form>
+</section>
+    }
+</div>

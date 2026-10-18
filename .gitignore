@@ -1,0 +1,19 @@
+
+# Build output
+bin/
+obj/
+
+# Local SQLite databases
+servicedesk.db
+servicedesk.db-*
+servicedesk-backup.db
+servicedesk-backup.db-*
+
+# IDE and local settings
+.vs/
+.vscode/
+*.user
+*.suo
+
+# Logs
+*.log

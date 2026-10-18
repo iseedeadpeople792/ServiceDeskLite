@@ -1,0 +1,100 @@
+
+@page
+@model ServiceDeskLite.Pages.Tickets.CreateModel
+@{
+    ViewData["Title"] = "New Support Ticket";
+}
+
+<div class="dashboard">
+    <div class="page-header">
+        <div>
+            <p class="eyebrow">SUPPORT CENTER</p>
+            <h1>New support ticket</h1>
+            <p class="subtitle">
+                Describe your issue and our support team will review it.
+            </p>
+        </div>
+        <a class="new-ticket" href="/">Back to dashboard</a>
+    </div>
+
+    @if (TempData["SuccessMessage"] is string message)
+    {
+        <div class="alert alert-success mt-4" role="status">
+            @message
+        </div>
+    }
+
+    <section class="tickets-panel mt-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly"
+                 class="text-danger mb-3"></div>
+
+            <div class="mb-3">
+                <label asp-for="Ticket.RequesterName"
+                       class="form-label">Your name</label>
+                <input asp-for="Ticket.RequesterName"
+                       class="form-control"
+                       autocomplete="name" />
+                <span asp-validation-for="Ticket.RequesterName"
+                      class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Ticket.Subject"
+                       class="form-label">Subject</label>
+                <input asp-for="Ticket.Subject"
+                       class="form-control"
+                       placeholder="e.g. Printer is not working" />
+                <span asp-validation-for="Ticket.Subject"
+                      class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Ticket.Description"
+                       class="form-label">Description</label>
+                <textarea asp-for="Ticket.Description"
+                          class="form-control"
+                          rows="5"
+                          placeholder="Describe what happened..."></textarea>
+                <span asp-validation-for="Ticket.Description"
+                      class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Ticket.Category"
+                       class="form-label">Category</label>
+                <select asp-for="Ticket.Category" class="form-select">
+                    <option value="Hardware">Hardware</option>
+                    <option value="Software">Software</option>
+                    <option value="Network">Network</option>
+                    <option value="Account">Account</option>
+                </select>
+                <span asp-validation-for="Ticket.Category"
+                      class="text-danger"></span>
+            </div>
+
+            <div class="mb-4">
+                <label asp-for="Ticket.Priority"
+                       class="form-label">Priority</label>
+                <select asp-for="Ticket.Priority" class="form-select">
+                    <option value="Low">Low</option>
+                    <option value="Medium">Medium</option>
+                    <option value="High">High</option>
+                </select>
+                <span asp-validation-for="Ticket.Priority"
+                      class="text-danger"></span>
+            </div>
+
+            <button type="submit" class="new-ticket border-0">
+                Submit ticket
+            </button>
+            <a href="/" class="btn btn-outline-secondary ms-2">
+                Cancel
+            </a>
+        </form>
+    </section>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

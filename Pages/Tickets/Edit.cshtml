@@ -1,0 +1,56 @@
+
+@page "{id:int}"
+@model ServiceDeskLite.Pages.Tickets.EditModel
+
+@{
+    ViewData["Title"] = "Редактирование заявки";
+}
+
+<h1>Редактирование заявки #@Model.Ticket.Id</h1>
+
+<form method="post">
+    <input type="hidden" asp-for="Ticket.Id" />
+
+    <div asp-validation-summary="All" class="text-danger mb-3"></div>
+
+    <div class="mb-3">
+        <label asp-for="Ticket.Subject" class="form-label">Тема</label>
+        <input asp-for="Ticket.Subject" class="form-control" maxlength="100" required />
+        <span asp-validation-for="Ticket.Subject" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Ticket.Description" class="form-label">Описание</label>
+        <textarea asp-for="Ticket.Description" class="form-control" rows="5" maxlength="2000" required></textarea>
+        <span asp-validation-for="Ticket.Description" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Ticket.RequesterName" class="form-label">Имя заявителя</label>
+        <input asp-for="Ticket.RequesterName" class="form-control" maxlength="80" required />
+        <span asp-validation-for="Ticket.RequesterName" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Ticket.Category" class="form-label">Категория</label>
+        <select asp-for="Ticket.Category" class="form-select">
+            <option value="Hardware">Оборудование</option>
+            <option value="Software">Программное обеспечение</option>
+            <option value="Network">Сеть</option>
+            <option value="Account">Учётная запись</option>
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Ticket.Priority" class="form-label">Приоритет</label>
+        <select asp-for="Ticket.Priority" class="form-select">
+            <option value="Low">Низкий</option>
+            <option value="Medium">Средний</option>
+            <option value="High">Высокий</option>
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+    <a asp-page="/Tickets/Details" asp-route-id="@Model.Ticket.Id"
+       class="btn btn-secondary">Отмена</a>
+</form>
