@@ -15,6 +15,37 @@ ServiceDesk Lite allows users to create, track, search, filter, and update suppo
 - **Persistent storage** — store tickets and comments in an SQLite database using Entity Framework Core.
 - **Dashboard counters** — view the number of tickets in each status.
 
+
+## Screenshots
+
+### Dashboard
+View ticket statistics, search requests, and filter them by status, category, and priority.
+
+![ServiceDesk Lite dashboard](docs/screenshots/dashboard.png)
+
+### Create a ticket
+Submit a support request with a subject, description, requester name, category, and priority.
+
+![Create a support ticket](docs/screenshots/ticket-create.png)
+
+### Ticket details and comments
+View ticket information, update its status, and add comments.
+
+![Ticket details and comments](docs/screenshots/ticket-details.png)
+
+### Edit a ticket
+Update ticket information while preserving its status and comment history.
+
+![Edit a support ticket](docs/screenshots/ticket-edit.png)
+
+### Search and filters
+Find tickets using text search and filtering options.
+
+![Ticket search and filters](docs/screenshots/ticket-filters.png)
+
+[Русская версия README](README.ru.md)
+
+
 ## Technologies
 
 - C#
